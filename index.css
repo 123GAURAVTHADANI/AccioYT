@@ -1,0 +1,37 @@
+body {
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+#container {
+  display: grid;
+  /* responsive container */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+.card {
+  background-color: #121212;
+  /* height: 200px; */
+  padding: 0.5rem;
+}
+.addToCart {
+  background-color: orange;
+  color: white;
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 1rem;
+  font-weight: bold;
+}
+.videoContainer {
+  height: 250px;
+  width: 100%;
+}
+.video {
+  width: 100%;
+  height: 100%;
+}
+/* % - widths 
+padding , margin , font-size ... : rem
+height: vh ( view height)
+borders, outlines : px
+*/
