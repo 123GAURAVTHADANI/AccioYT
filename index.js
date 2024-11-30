@@ -128,21 +128,45 @@ const data = [
 Array.prototype.myMap = function (callback) {
   let temp = [];
   for (let i = 0; i < this.length; i++) {
-    temp.push(callback(this[i]));
+    temp.push(callback(this[i], i));
   }
   return temp;
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-  data.myMap((item) => {
+  data.myMap((item, index) => {
     document.getElementById("container").innerHTML += `
     <div class='card'>
         <h3>${item.title}</h3>
         <div class="videoContainer">
         <video poster='${item.thumbnailUrl}' class="video" controls src='${item.videoUrl}'/>
         </div>
-        <button class="addToCart">Add to Cart!</button>
+        <button class="addToCart">${index}.Add to Cart</button>
         </div>
       `;
+  });
+  document.getElementById("count").innerText = JSON.parse(
+    localStorage.getItem("addToCart")
+  ).length;
+
+  document.getElementById("container").addEventListener("click", (event) => {
+    if (event.target && event.target.matches("button.addToCart")) {
+      let indexCheck = event.target.innerText.split(".")[0];
+      let filtered_data = data.filter(
+        (item) => Number(item.id) == Number(indexCheck) + 1
+      );
+      if (!localStorage.hasOwnProperty("addToCart")) {
+        let result = [];
+        result.push(filtered_data);
+        localStorage.setItem("addToCart", JSON.stringify(result));
+      } else if (localStorage.hasOwnProperty("addToCart")) {
+        let currentValue = JSON.parse(localStorage.getItem("addToCart"));
+        currentValue.push(filtered_data);
+        localStorage.setItem("addToCart", JSON.stringify(currentValue));
+      }
+      document.getElementById("count").innerText = JSON.parse(
+        localStorage.getItem("addToCart")
+      ).length;
+    }
   });
 });
